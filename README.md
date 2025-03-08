@@ -27,6 +27,8 @@ cargo build
 cargo run
 ```
 
+或者直接运行
+
 程序将生成一个名为 `my_wave.wav` 的音频文件，并尝试播放它。
 
 ### 自定义音频
