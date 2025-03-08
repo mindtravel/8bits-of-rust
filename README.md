@@ -1,4 +1,4 @@
-# ByteStudio
+# 8bits_of_rust
 一个基于Rust的**8bit音频工作站**
 
 ## 功能
