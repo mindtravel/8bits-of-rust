@@ -1,0 +1,15 @@
+[package]
+name = "byte_studio"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rodio = "0.20.1"
+hound = "3.4"
+libm = "0.2.11" 
+rand = "0.9.0" 
+multimap = "0.10.0"
+winapi = { version = "0.3", features = ["winuser"] }
+
+# [profile.release]
+# windows_subsystem = 'windows'
