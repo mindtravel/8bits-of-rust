@@ -1,6 +1,6 @@
-use std::sync::LazyLock;
 use crate::Channel;
 use crate::N_CHAN;
+use std::sync::LazyLock;
 
 pub static SONG: LazyLock<[Channel; N_CHAN]> = LazyLock::new(|| {
     [

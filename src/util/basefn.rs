@@ -1,34 +1,34 @@
-use std::fs::File;
-use std::io::BufReader;
 use hound;
 use rodio::{Decoder, OutputStream, Sink}; //, source::Source};
-use std::thread;
-use std::time::Duration;
+use std::collections::HashMap;
 use std::env;
 use std::fs;
+use std::fs::File;
+use std::io::BufReader;
 use std::sync::LazyLock;
-use std::collections::HashMap;
+use std::thread;
+use std::time::Duration;
 
-use crate::Score;
 use crate::Channel;
-use crate::Timebase;
-use crate::NoteType;
-use crate::Timestamp;
-use crate::SynthParameters;
-use crate::Note;
 use crate::Level;
 use crate::Midi;
+use crate::Note;
+use crate::NoteType;
+use crate::Score;
+use crate::SynthParameters;
+use crate::Timebase;
+use crate::Timestamp;
 
 use crate::synth::synth;
 
-use crate::START;
 use crate::END;
+use crate::START;
 
-use crate::SAMPLE_RATE;
-use crate::LOOP_TIMES;
 use crate::FREQ_DATA;
-use crate::SONG_LEN;
+use crate::LOOP_TIMES;
 use crate::N_CHAN;
+use crate::SAMPLE_RATE;
+use crate::SONG_LEN;
 use crate::T_BASE;
 use crate::T_BEAT;
 
@@ -42,7 +42,7 @@ pub fn midi_generator(note: &str) -> Score {
         match byte {
             b'(' => {
                 need_reset = true;
-                for idx in &idx_vec{
+                for idx in &idx_vec {
                     score.insert(
                         tbase,
                         Midi {
@@ -53,7 +53,7 @@ pub fn midi_generator(note: &str) -> Score {
                 }
             }
             b')' => {
-                for idx in &idx_vec{
+                for idx in &idx_vec {
                     score.insert(
                         tbase,
                         Midi {
@@ -61,7 +61,7 @@ pub fn midi_generator(note: &str) -> Score {
                             typ: END!(),
                         },
                     );
-                }            
+                }
             }
             b'-' => tbase += 2,
             b'=' => tbase += 1,
@@ -72,7 +72,7 @@ pub fn midi_generator(note: &str) -> Score {
             b'#' => idx_tmp += 1,
             b'b' => idx_tmp -= 1,
             b'0'..=b'9' => {
-                if need_reset == true{
+                if need_reset == true {
                     idx_vec.clear();
                     need_reset = false;
                 }
@@ -93,7 +93,6 @@ pub fn generate_wav(name: &str, sample: Vec<Level>) {
         sample_format: hound::SampleFormat::Int,
     };
 
-    
     let current_dir = match env::current_dir() {
         Ok(path) => path,
         Err(e) => {
@@ -115,8 +114,7 @@ pub fn generate_wav(name: &str, sample: Vec<Level>) {
     }
 
     let path = wav_path.join(format!("{}{}", name, ".wav"));
-    let mut writer =
-        hound::WavWriter::create(path, spec).unwrap();
+    let mut writer = hound::WavWriter::create(path, spec).unwrap();
 
     // 写入双声道音频
     for i in 0..sample.len() {
@@ -229,7 +227,7 @@ pub fn mixer(song: &LazyLock<[Channel; N_CHAN]>) -> Vec<Level> {
             channel_idx += 1;
         }
         for _i in 0..full_samples {
-            let mut res:Level = 0;
+            let mut res: Level = 0;
             for params in synth_parameters.values() {
                 res += synth(params, clock);
             }
