@@ -39,7 +39,11 @@ impl Pattern {
         self.channel_id = new_id;
     }
 
-    pub fn copy_notes(&mut self, new_notes: &Score) {
+    pub fn change_start_time(&mut self, new_start_time: Timebase) {
+        self.start_time = new_start_time;
+    }
+
+    pub fn copy_notes_from(&mut self, new_notes: &Score) {
         self.score.clone_from(new_notes)
     }
 
