@@ -65,7 +65,7 @@ impl Pattern {
         self.change_note(note_idx, start_time, end_time, true)
     }
 
-    pub fn change_note(
+    fn change_note(
         &mut self,
         idx: Note,
         st: Timebase,
