@@ -10,6 +10,7 @@ use std::thread;
 use std::time::Duration;
 
 use crate::Channel;
+use crate::Pattern;
 use crate::Level;
 use crate::Midi;
 use crate::Note;
@@ -191,10 +192,10 @@ pub fn load_wav(name: &str) {
         sink.sleep_until_end();
     }
 }
-
+/*
 pub fn mixer(song: &LazyLock<[Channel; N_CHAN]>) -> Vec<Level> {
     let mut clock = 0 as Timestamp;
-    let full_samples = (SAMPLE_RATE as f32 * T_BEAT) as Timestamp;
+    // let full_samples = (SAMPLE_RATE as f32 * T_BEAT) as Timestamp;
     let full_samples = (SAMPLE_RATE as f32 * T_BASE) as Timestamp;
     let mut sample: Vec<Level> = Vec::new();
     let mut synth_parameters: HashMap<usize, SynthParameters> = HashMap::new();
@@ -239,4 +240,55 @@ pub fn mixer(song: &LazyLock<[Channel; N_CHAN]>) -> Vec<Level> {
     }
     sample
     // println!("{}", f);
+}
+*/
+pub fn mixer(patterns: &Vec<Vec<Pattern>>, channels: &Vec<Channel>) -> Vec<Level> {
+    let mut clock = 0 as Timestamp;
+    // let full_samples = (SAMPLE_RATE as f32 * T_BEAT) as Timestamp;
+    let full_samples = (SAMPLE_RATE as f32 * T_BASE) as Timestamp;
+    let mut sample: Vec<Level> = Vec::new();
+    let mut synth_parameters: HashMap<usize, SynthParameters> = HashMap::new();
+
+    let mut idx: Timebase = 0;
+
+    while idx < SONG_LEN {
+        let mut channel_idx = 0;
+
+        while (channel_idx) < N_CHAN {
+            // 初始化音轨设置
+            for pat in &patterns[channel_idx] {
+                if let Some(midis) = pat.get_vec(idx) {
+                    for midi in midis {
+                        if midi.typ == START!() as NoteType {
+                            synth_parameters.insert(
+                                channel_idx * 128 + midi.note as usize,
+                                SynthParameters::new(
+                                    FREQ_DATA[midi.note as usize],
+                                    channels[channel_idx].volume,
+                                    &channels[channel_idx].preset,
+                                    channels[channel_idx].n_poly,
+                                    channels[channel_idx].be_modulated,
+                                ),
+                            );
+                        }
+                        if midi.typ == END!() as NoteType {
+                            synth_parameters.remove(&(channel_idx * 128 + midi.note as usize));
+                        }
+                    }
+                }
+            }
+            channel_idx += 1;
+        }
+        for _i in 0..full_samples {
+            let mut res: Level = 0;
+            for params in synth_parameters.values() {
+                res += synth(params, clock);
+            }
+            sample.push(res);
+            clock += 1;
+        }
+
+        idx += 1;
+    }
+    sample
 }

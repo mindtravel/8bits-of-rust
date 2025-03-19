@@ -14,16 +14,16 @@ pub struct Pattern {
     score: Score,
     start_time: Timebase,
     len: Timebase,
-    channel_id: ChannelID,
+    // channel_id: ChannelID,
 }
 
 impl Pattern {
-    pub fn new(t: Timebase, channel_id: ChannelID) -> Self {
+    pub fn new(t: Timebase) -> Self {
         Self {
             score: Score::new(),
             start_time: t,
             len: 0,
-            channel_id: channel_id,
+            // channel_id: channel_id,
         }
     }
 
@@ -31,15 +31,32 @@ impl Pattern {
         self.len
     }
 
-    pub fn get_channel_id(&self) -> ChannelID {
-        self.channel_id
+    // pub fn get_channel_id(&self) -> ChannelID {
+    //     self.channel_id
+    // }
+
+    pub fn get_start_time(&self) -> Timebase {
+        self.start_time
     }
 
-    pub fn change_channel_id(&mut self, new_id: ChannelID) {
-        self.channel_id = new_id;
+    pub fn get_score(&self) -> &Score {
+        &self.score
     }
 
-    pub fn change_start_time(&mut self, new_start_time: Timebase) {
+    pub fn get_vec(&self, t: Timebase) -> Option<&Vec<Midi>> {
+        // t为音符在全曲的绝对时间，查找是需要减去pattern开始的时间，变成音符相对pattern的时间才能查询到
+        if t < self.start_time {
+            return None;
+        }
+        let relative_time= t - self.start_time;
+        self.get_score().get_vec(&relative_time)
+    }
+
+    // pub fn set_channel_id(&mut self, new_id: ChannelID) {
+    //     self.channel_id = new_id;
+    // }
+
+    pub fn set_start_time(&mut self, new_start_time: Timebase) {
         self.start_time = new_start_time;
     }
 
