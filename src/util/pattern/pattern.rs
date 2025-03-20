@@ -3,6 +3,7 @@ use std::io::Write;
 use crate::util::basetype::ChannelID;
 use crate::util::basetype::Midi;
 use crate::util::parameter::baseconst::NOTE_NUM;
+use crate::util::parameter::baseconst::SONG_LEN;
 use crate::Channel;
 use crate::Note;
 use crate::Score;
@@ -61,7 +62,9 @@ impl Pattern {
     }
 
     pub fn copy_notes_from(&mut self, new_notes: &Score) {
-        self.score.clone_from(new_notes)
+        self.score.clone_from(new_notes);
+        // 然后更新len
+        self.update_len();
     }
 
     pub fn insert_note(
@@ -80,6 +83,22 @@ impl Pattern {
         end_time: Timebase,
     ) -> Result<(), &str> {
         self.change_note(note_idx, start_time, end_time, true)
+    }
+
+    fn update_len(&mut self) {
+        let mut max_len: Timebase = 0;
+        for i in 0..(SONG_LEN*16 + 1) {
+            let _notes = match self.score.get_vec(&i) {
+                Some(_x) => {
+                     max_len = i;
+                    continue;
+                } // 如果这个时间有音符，查是否有相同的
+                _ => {
+                    continue;
+                } // 如果这个时间没有音符，继续查询
+            };
+        } // for i
+        self.len = max_len;
     }
 
     fn change_note(
