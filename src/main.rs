@@ -31,9 +31,9 @@ use util::basefn::mixer;
 
 use util::test::init_test_channel;
 use util::test::init_test_pattern;
+use util::test::init_test_song;
 
 use util::parameter::baseconst::BPM;
-use util::parameter::baseconst::N_CHAN;
 use util::parameter::baseconst::N_TBASE;
 use util::parameter::baseconst::SAMPLE_RATE; // 采样率
 use util::parameter::baseconst::SONG_LEN;
@@ -61,12 +61,10 @@ use util::parameter::baseconst::MAX_POLY;
 //     println!("窗口已隐藏");
 // }
 
-
 fn main() {
-    let patterns = init_test_pattern();
-    let channels = init_test_channel();
+    let song = init_test_song();
     let name = "my_wave";
-    let sample = mixer(&patterns, &channels);
+    let sample = mixer(&song);
     // let sample = mixer(&SONG);
     generate_wav(name, sample);
     load_wav(name);

@@ -49,7 +49,7 @@ impl Pattern {
         if t < self.start_time {
             return None;
         }
-        let relative_time= t - self.start_time;
+        let relative_time = t - self.start_time;
         self.get_score().get_vec(&relative_time)
     }
 
@@ -87,10 +87,10 @@ impl Pattern {
 
     fn update_len(&mut self) {
         let mut max_len: Timebase = 0;
-        for i in 0..(SONG_LEN*16 + 1) {
+        for i in 0..(SONG_LEN * 16 + 1) {
             let _notes = match self.score.get_vec(&i) {
                 Some(_x) => {
-                     max_len = i;
+                    max_len = i;
                     continue;
                 } // 如果这个时间有音符，查是否有相同的
                 _ => {

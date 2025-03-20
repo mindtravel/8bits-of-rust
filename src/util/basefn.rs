@@ -10,11 +10,11 @@ use std::thread;
 use std::time::Duration;
 
 use crate::Channel;
-use crate::Pattern;
 use crate::Level;
 use crate::Midi;
 use crate::Note;
 use crate::NoteType;
+use crate::Pattern;
 use crate::Score;
 use crate::SynthParameters;
 use crate::Timebase;
@@ -27,11 +27,12 @@ use crate::START;
 
 use crate::FREQ_DATA;
 use crate::LOOP_TIMES;
-use crate::N_CHAN;
 use crate::SAMPLE_RATE;
 use crate::SONG_LEN;
 use crate::T_BASE;
 use crate::T_BEAT;
+
+use super::song::Song;
 
 pub fn midi_generator(note: &str) -> Score {
     let mut tbase: Timebase = 0;
@@ -242,7 +243,10 @@ pub fn mixer(song: &LazyLock<[Channel; N_CHAN]>) -> Vec<Level> {
     // println!("{}", f);
 }
 */
-pub fn mixer(patterns: &Vec<Vec<Pattern>>, channels: &Vec<Channel>) -> Vec<Level> {
+pub fn mixer(song: &Song) -> Vec<Level> {
+    let patterns = &song.patterns;
+    let channels = &song.channels;
+    let channel_num = channels.len();
     let mut clock = 0 as Timestamp;
     // let full_samples = (SAMPLE_RATE as f32 * T_BEAT) as Timestamp;
     let full_samples = (SAMPLE_RATE as f32 * T_BASE) as Timestamp;
@@ -254,7 +258,7 @@ pub fn mixer(patterns: &Vec<Vec<Pattern>>, channels: &Vec<Channel>) -> Vec<Level
     while idx < SONG_LEN {
         let mut channel_idx = 0;
 
-        while (channel_idx) < N_CHAN {
+        while (channel_idx) < channel_num {
             // 初始化音轨设置
             for pat in &patterns[channel_idx] {
                 if let Some(midis) = pat.get_vec(idx) {

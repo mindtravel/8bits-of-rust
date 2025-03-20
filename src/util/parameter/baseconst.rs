@@ -4,7 +4,6 @@ pub const SAMPLE_RATE: u32 = 44100; // 采样率
 pub const BPM: u32 = 145;
 pub const T_BEAT: f32 = 60.0 / BPM as f32;
 pub const T_BASE: f32 = 60.0 / (BPM * N_TBASE) as f32;
-pub const N_CHAN: usize = 5;
 // pub const LOOP_TIMES:i16 = 8;
 pub const LOOP_TIMES: u16 = u16::MAX;
 pub const MAX_POLY: usize = 8;
