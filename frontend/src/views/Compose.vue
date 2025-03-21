@@ -1,6 +1,6 @@
 <template>
   <div>
-    <my-button text = "合成器" @click="changeState('synth')"/>|
+    <my-button text = "插件" @click="changeState('synth')"/>|
     <my-button text = "混音台" @click="changeState('mixer')"/>|
     <my-button text = "编曲" @click="changeState('arangement')"/>|
     <my-button text = "导出歌曲" @click="changeState('export-song')"/>

@@ -50,24 +50,63 @@
 
 但是控制每个信号对编曲者来说太复杂了，目前通过处理字符串得到正确的信号
 
-# TODO
+# DONE & <u>TODO</u>
+
+下划线是TODO内容
 
 ## 前端
-## 页面
-- / 开始页面 
-#### 编曲
+- 前端基于**Vue3**，安装教程地址 https://www.runoob.com/vue3/vue3-install.html
+- 在`./frontend`目录下，执行 `npm run serve` 预览前端网页
+- 要修改的文件基本在`./frontend/src`中，所以文件路径都是相对`./frontend/src`而言的
 
-1. 基于目前的midi信号接口，采用交互友好的钢琴窗，功能支持
 
-- 点击空白处绘制音符，点击音符删除之
-- 拖动音符改变长度
-- 框选音符移动、复制和删除
+### 页面级组件 
+
+|route|组件名称|备注|文件路径|
+|---|---|---|---|
+|/|Home|一个单独的按钮|.\App.vue|
+|/Compose|Compose|编曲页面|.\views\Compose.vue|
+|/Songs|Songs|歌曲列表页面|.\views\Songs.vue|
+|/Developers|Developers|开发者页面|.\views\Developers.vue|
+
+### 页面内组件 
+**Compose**
+- 插件分页
+  - Synth：合成器组件 `./components/Compose/Synth.vue`
+  - <u>Effector: 效果器组件 `./components/Compose/Effector.vue`
+  - Sampler: 采样器组件`./components/Compose/Sampler.vue`
+  - Visializer: 可视化组件，将一条音轨的波形可视化，具体原理是，每隔一小段时间，将当前播放的波形显示出来`./components/Compose/Visializer.vue`</u>
+- 混音台分页 `./components/Compose/Mixer.vue`
+  - 显示5条音轨，<u>一条音轨能挂载3个效果器，支持移动顺序
+  - 点击插件能够将插件分页显示的内容变更为对应的插件</u>
+  - 每条音轨单独调节音量、声相
+- 编曲分页 `./components/Compose/Arrangement.vue`
+  - 显示五条轨道<u>上所有歌曲的Pattern `./components/Compose/SongDisplay.vue`
+  - 一个Pattern的侧边栏，显示当前所有的Pattern，可以新建、删除Pattern、将Patter拖动到对应的轨道上 `./components/Compose/PatternManager.vue`
+  - 一个钢琴窗界面，点按对应的Pattern，可以编辑音符 `./components/Compose/PianoRoll.vue`
+    - 左键点击空白处绘制音符，邮件点击音符删除之
+    - 拖动音符末尾改变长度
+    - 框选多个音符拖拽移动、Ctrl + C复制和 Delete删除</u>
+
+**Songs**
+- 歌曲列表，调取歌曲信息并用表格呈现 `./components/Songs/SongList.vue`
+- 歌曲表单，实现新建歌曲的逻辑 `./components/Songs/SongForm.vue`
+
+**Developers** 还需要放<u>打钱二维码链接</u>，其他略
+
+### 像素风格组件：
+- MyText：文本组件
+- MyInput：输入框组件
+- MyButton：按钮组件
+- MyKnob：旋钮组件
+- <u>MySlider：滑动条组件
+- MyCheckbox：复选框组件</u>
+
+
+
 
 #### 音频文件分析和可视化
-
-1. 波形可视化
-   每隔一小段时间，将当前播放的波形显示出来
-2. 查看频谱
+1. 查看频谱
 
 ## 后端
 
