@@ -1,7 +1,7 @@
 <template>
 <table>
     <tbody>
-    <tr v-for="n in this.n_channels">
+    <tr v-for="n in this.n_channels" :key="n">
         <td><my-text v-bind:content="'音轨'+ (n).toString() " size="large"/></td>
         <td><my-button text="合成器"/></td>
         <td><my-button text="效果器1"/></td>

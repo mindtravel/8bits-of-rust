@@ -1,7 +1,7 @@
 <template>
 <div>
     <tbody>
-    <tr v-for="n in this.n_channels">
+    <tr v-for="n in this.n_channels" :key="n">
         <td><my-text v-bind:content="'音轨'+ (n).toString() " size="large"/></td>
     </tr>
     </tbody>
