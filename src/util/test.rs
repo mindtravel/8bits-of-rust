@@ -4,7 +4,7 @@ use crate::Channel;
 use crate::Pattern;
 
 pub fn test_pattern() {
-    let mut p = Pattern::new(0);
+    let mut p = Pattern::new(0, "test");
     p.insert_note(0, 2, 4).unwrap();
     p.insert_note(0, 3, 8).unwrap();
     p.insert_note(0, 12, 23).unwrap();
@@ -33,7 +33,7 @@ pub fn init_test_song() -> Song {
     song.new_channel("5", "noise", 0.06, 1, 0, false);
 
     for i in 0..5 {
-        song.new_pattern(i, 0).unwrap();
+        song.new_pattern(i, 0, "first").unwrap();
     }
     song.copy_pattern_from(
         0,
@@ -49,7 +49,8 @@ pub fn init_test_song() -> Song {
         ),
     )
     .unwrap();
-    song.new_pattern(0, song.patterns[0][0].get_len()).unwrap();
+    song.new_pattern(0, song.patterns[0][0].get_len(), "01")
+        .unwrap();
     song.copy_pattern_from(
         0,
         1,
@@ -65,6 +66,7 @@ pub fn init_test_song() -> Song {
     song.new_pattern(
         0,
         song.patterns[0][0].get_len() + song.patterns[0][1].get_len(),
+        "02",
     )
     .unwrap();
     song.copy_pattern_from(0, 2, &midi_generator("
@@ -86,7 +88,8 @@ pub fn init_test_song() -> Song {
         ),
     )
     .unwrap();
-    song.new_pattern(1, song.patterns[1][0].get_len()).unwrap();
+    song.new_pattern(1, song.patterns[1][0].get_len(), "11")
+        .unwrap();
     song.copy_pattern_from(
         1,
         1,
@@ -118,7 +121,8 @@ pub fn init_test_song() -> Song {
         ),
     )
     .unwrap();
-    song.new_pattern(2, song.patterns[2][0].get_len()).unwrap();
+    song.new_pattern(2, song.patterns[2][0].get_len(), "12")
+        .unwrap();
     song.copy_pattern_from(
         2,
         1,
@@ -138,6 +142,7 @@ pub fn init_test_song() -> Song {
     song.new_pattern(
         2,
         song.patterns[2][0].get_len() + song.patterns[2][1].get_len(),
+        "21",
     )
     .unwrap();
     song.copy_pattern_from(
@@ -161,6 +166,7 @@ pub fn init_test_song() -> Song {
         song.patterns[2][0].get_len()
             + song.patterns[2][1].get_len()
             + song.patterns[2][2].get_len(),
+        "22",
     )
     .unwrap();
     song.copy_pattern_from(
@@ -216,7 +222,7 @@ pub fn init_test_pattern() -> Vec<Vec<Pattern>> {
     let mut patterns: Vec<Vec<Pattern>> = Vec::new();
     for i in 0..5 {
         patterns.push(Vec::new());
-        patterns[i].push(Pattern::new(0));
+        patterns[i].push(Pattern::new(0, "test"));
     }
     patterns[0][0].copy_notes_from(&midi_generator(
         "
@@ -228,7 +234,7 @@ pub fn init_test_pattern() -> Vec<Vec<Pattern>> {
         D#4(-----),F4(-),D#4(-),C4(-),|D4(------),C4(-),D4(-),||",
     ));
     let tmp = patterns[0][0].get_len();
-    patterns[0].push(Pattern::new(tmp));
+    patterns[0].push(Pattern::new(tmp, "test"));
     patterns[0][1].copy_notes_from(&midi_generator(
         "
         D#4(-----),G4(-),F4(-),D#4(-),|F4(-),D4(-----),A#3(-),C4(-),|
@@ -237,7 +243,7 @@ pub fn init_test_pattern() -> Vec<Vec<Pattern>> {
         D#4(-----),F4(-),D#4(-),C4(-),|G4(------),F4(-),G4(-),||",
     ));
     let tmp = tmp + patterns[0][1].get_len();
-    patterns[0].push(Pattern::new(tmp));
+    patterns[0].push(Pattern::new(tmp, "test"));
     patterns[0][2].copy_notes_from(&midi_generator("
         G#4(------),D4(-),D#4(-)|F4(------),C4(-),D4(-)|
         D#4(------),C4(-),G3(-)|C4(-)D4(-)C4(-)D4(-)D#4(--)G4(-)G#4(-)||
@@ -253,7 +259,7 @@ pub fn init_test_pattern() -> Vec<Vec<Pattern>> {
         G5C6-(-)-(-)-(-)-(-)|G5B5-(-)-(-)-(-)-(-)||",
     ));
     let tmp = patterns[1][0].get_len();
-    patterns[1].push(Pattern::new(tmp));
+    patterns[1].push(Pattern::new(tmp, "test"));
     patterns[1][1].copy_notes_from(&midi_generator("C6D#6-(-)-(-)-(-)-(-)|A#5D6-(-)-(-)-(-)-(-)|
          -(-)-(-)-(-)-(-)|G5C6-(-)-(-)-(-)-(-)|
         A#5D#6-(-)-(-)-(-)-(-),|A#5D6-(-)-(-)-(-)-(-)|
@@ -274,7 +280,7 @@ pub fn init_test_pattern() -> Vec<Vec<Pattern>> {
         F2(-),F3(-),F2(-),F3(-),F2(-),F3(-),F2(-),F3(-),||",
     ));
     let tmp = patterns[2][0].get_len();
-    patterns[2].push(Pattern::new(tmp));
+    patterns[2].push(Pattern::new(tmp, "test"));
     patterns[2][1].copy_notes_from(&midi_generator(
         "D#3(-),D#4(-),D#3(-),D#4(-),D#3(-),D#4(-),D#3(-),D#4(-),
         A#2(-),A#3(-),A#2(-),A#3(-),A#2(-),A#3(-),A#2(-),A#3(-),
@@ -287,7 +293,7 @@ pub fn init_test_pattern() -> Vec<Vec<Pattern>> {
         F2(-),F3(-),F2(-),F3(-),F2(-),F3(-),F2(-),F3(-),||",
     ));
     let tmp = tmp + patterns[2][1].get_len();
-    patterns[2].push(Pattern::new(tmp));
+    patterns[2].push(Pattern::new(tmp, "test"));
     patterns[2][2].copy_notes_from(&midi_generator(
         "D#3(-),D#4(-),D#3(-),D#4(-),D#3(-),D#4(-),D#3(-),D#4(-),
         A#2(-),A#3(-),A#2(-),A#3(-),A#2(-),A#3(-),A#2(-),A#3(-),
@@ -300,7 +306,7 @@ pub fn init_test_pattern() -> Vec<Vec<Pattern>> {
         G2(-),G3(-),G2(-),G3(-),G2(-),G3(-),G2(-),G3(-)||",
     ));
     let tmp = tmp + patterns[2][2].get_len();
-    patterns[2].push(Pattern::new(tmp));
+    patterns[2].push(Pattern::new(tmp, "test"));
     patterns[2][3].copy_notes_from(&midi_generator(
         "F2(-),F3(-),F2(-),F3(-),F2(-),F3(-),F2(-),F3(-),
         G2(-),G3(-),G2(-),G3(-),G2(-),G3(-),G2(-),G3(-),|

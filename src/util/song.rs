@@ -1,6 +1,11 @@
+use rodio::cpal::Sample;
+
 use crate::Channel;
 use crate::Pattern;
 use crate::Score;
+use std::io::BufRead;
+use std::io::Read;
+use std::io::Write;
 use std::string;
 use std::vec;
 
@@ -42,12 +47,23 @@ impl Song {
         self.patterns.push(Vec::new());
     }
 
-    pub fn new_pattern(&mut self, channel_id: usize, start_time: Timebase) -> Result<(), &str> {
+    pub fn clear(&mut self) {
+        self.name.clear();
+        self.channels.clear();
+        self.patterns.clear();
+    }
+
+    pub fn new_pattern(
+        &mut self,
+        channel_id: usize,
+        start_time: Timebase,
+        pattern_name: &str,
+    ) -> Result<(), &str> {
         if channel_id >= self.channels.len() {
             return Err("Channel index out of boundary!");
         } // if out of boundary
 
-        self.patterns[channel_id].push(Pattern::new(start_time));
+        self.patterns[channel_id].push(Pattern::new(start_time, pattern_name));
         self.sort_patterns(channel_id);
         Ok(())
     }
@@ -128,6 +144,101 @@ impl Song {
 
         Err("Wrong mode!")
     }
+
+    pub fn save_to_file(&self, file_path: &str) {
+        let mut file = std::fs::File::create(file_path).expect("Create song file failed!");
+        // 先写名字
+        file.write(self.name.as_bytes()).unwrap();
+        // 用换行符作为间隔
+        file.write(b"\n").unwrap();
+        // 写总共的channel数量
+        file.write(self.channels.len().to_string().as_bytes())
+            .unwrap();
+        file.write(b"\n").unwrap();
+        // 再写各个channel和pattern
+        for i in 0..self.channels.len() {
+            // file.write(b"channel ").unwrap();
+            // file.write(i.to_string().as_bytes()).unwrap();
+            // file.write(b"\n").unwrap();
+
+            file.write(self.channels[i].name.as_bytes()).unwrap();
+            file.write(b"\n").unwrap();
+            file.write(self.channels[i].preset.as_bytes()).unwrap();
+            file.write(b"\n").unwrap();
+            file.write(self.channels[i].volume.to_string().as_bytes())
+                .unwrap();
+            file.write(b"\n").unwrap();
+            file.write(self.channels[i].n_poly.to_string().as_bytes())
+                .unwrap();
+            file.write(b"\n").unwrap();
+            file.write(self.channels[i].pan.to_string().as_bytes())
+                .unwrap();
+            file.write(b"\n").unwrap();
+            file.write(self.channels[i].be_modulated.to_string().as_bytes())
+                .unwrap();
+            file.write(b"\n").unwrap();
+            // 然后写channel里面的各个pattern
+            // 先写一共几个pattern
+            file.write(self.patterns[i].len().to_string().as_bytes())
+                .unwrap();
+            file.write(b"\n").unwrap();
+            for j in 0..self.patterns[i].len() {
+                self.patterns[i][j].write_to_file(&mut file);
+            } // for j
+        } // for i
+    }
+
+    pub fn read_from_file(&mut self, file_path: &str) -> Result<(), &str> {
+        // 先清理自己
+        self.clear();
+        // 再读文件
+        let mut file = std::fs::File::open(file_path).expect("File open failed!");
+        let mut buf: String = String::new();
+        match file.read_to_string(&mut buf) {
+            Ok(_) => (),
+            Err(_) => {
+                return Err("Read channel name failed!");
+            }
+        };
+
+        let lines: Vec<&str> = buf.split('\n').collect();
+        // 先读名字和总共的channel数量
+        self.name.clone_from(&lines[0].to_string());
+        let channel_num: usize = match lines[1].trim().parse::<usize>() {
+            Ok(x) => x,
+            Err(_) => {
+                return Err("Read channel number failed!");
+            }
+        };
+
+        // 先处理每个channel
+        let mut line_idx = 2;
+        for i in 0..channel_num {
+            // 先新建channel
+            self.new_channel(
+                lines[line_idx],
+                lines[line_idx + 1],
+                lines[line_idx + 2].trim().parse::<f32>().unwrap(),
+                lines[line_idx + 3].trim().parse::<usize>().unwrap(),
+                lines[line_idx + 4].trim().parse::<i8>().unwrap(),
+                lines[line_idx + 5].trim().parse::<bool>().unwrap(),
+            );
+            // 读取这个channel有几个pattern
+            let pattern_num = lines[line_idx + 6].trim().parse::<usize>().unwrap();
+            line_idx += 7;
+            for j in 0..pattern_num {
+                self.new_pattern(
+                    i,
+                    lines[line_idx + 1].trim().parse::<Timebase>().unwrap(),
+                    lines[line_idx],
+                )
+                .unwrap();
+                line_idx += 2; // 标识目前未读取的line index
+                self.patterns[i][j].read_from_string(&lines, &mut line_idx);
+            } // for j
+        } // for i
+        Ok(())
+    } // fn read_from_file
 
     fn sort_patterns(&mut self, channel_id: usize) {
         // 按照start time对一个channel的pattern排序

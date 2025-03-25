@@ -1,3 +1,4 @@
+use std::fs::File;
 use std::io::Write;
 
 use crate::util::basetype::ChannelID;
@@ -12,6 +13,7 @@ use crate::END;
 use crate::START;
 
 pub struct Pattern {
+    name: String,
     score: Score,
     start_time: Timebase,
     len: Timebase,
@@ -19,8 +21,9 @@ pub struct Pattern {
 }
 
 impl Pattern {
-    pub fn new(t: Timebase) -> Self {
+    pub fn new(t: Timebase, name: &str) -> Self {
         Self {
+            name: name.to_string(),
             score: Score::new(),
             start_time: t,
             len: 0,
@@ -268,8 +271,34 @@ impl Pattern {
         return Ok(());
     }
 
-    pub fn pattern_file(&self, file_path: &str) {
-        // 生成一个包括pattern中notes状态的file
+    pub fn read_from_string(&mut self, lines: &Vec<&str>, line_idx: &mut usize) {
+        // 接下来就是读notes了
+        for i in 0..NOTE_NUM {
+            // 先按空格parse
+            let time_str: Vec<&str> = lines[*line_idx].trim().split(' ').collect();
+            if time_str.is_empty() {
+                continue;
+            }
+            // 读每行对应音符的开始结束时间
+            let mut typ = START!();
+            for s in time_str {
+                if s.is_empty() {
+                    break;
+                }
+                self.score
+                    .insert(s.parse::<Timebase>().unwrap(), Midi { note: i, typ: typ as i8 });
+                if typ == START!() {
+                    typ = END!();
+                } else {
+                    typ = START!();
+                } // if change typ
+            } // for s
+            // 读完一行就加一
+            *line_idx += 1;
+        } // for i
+    } // fn read from string
+
+    pub fn write_to_file(&self, file: &mut File) {
         // 格式为86行字符串，每行由偶数个数字构成，每对相邻数字为本行对应音符起止时间。
         // 先创造二维数组
         let mut pattern: Vec<Vec<Timebase>> = Vec::new();
@@ -294,13 +323,24 @@ impl Pattern {
         } // for i in 0..len
 
         // 把pattern写入文件
-        let mut file = std::fs::File::create(file_path).expect("Create pattern file failed!");
+        // 先写名字
+        file.write(self.name.as_bytes()).unwrap();
+        file.write(b"\n").unwrap();
+        // 再写开始时间
+        file.write(self.start_time.to_string().as_bytes()).unwrap();
+        file.write(b"\n").unwrap();
         for i in 0..NOTE_NUM as usize {
             for j in &pattern[i] {
+                // println!("{:?}", j.to_string().as_bytes());
                 file.write(j.to_string().as_bytes()).unwrap();
                 file.write(b" ").unwrap();
             } // for j in pattern[i]
             file.write(b"\n").unwrap();
         } // for i in 0..86
     } // fn pattern_file
+
+    pub fn pattern_file(&self, file_path: &str) {
+        let mut file = std::fs::File::create(file_path).expect("Create pattern file failed!");
+        self.write_to_file(&mut file);
+    }
 }
