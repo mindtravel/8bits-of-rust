@@ -39,7 +39,8 @@ fn noise_wave(_phase: FTimestamp) -> f32 {
 }
 
 fn wave_generator(preset: &str, phase: FTimestamp) -> f32 {
-    let ret = match preset {
+    let preset = preset.trim().to_lowercase();
+    let ret = match preset.as_str() {
         "saw" => saw_wave(phase),
         "square" => square_wave(phase),
         "triangle" => triangle_wave(phase),
