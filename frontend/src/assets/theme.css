@@ -1,0 +1,51 @@
+:root {
+  --pixel-primary: #eee;
+  --pixel-secondary: #000;
+  --pixel-background: #bbb;
+  --pixel-border: #555;
+  --pixel-text: #000;
+  --pixel-disabled: #555;
+  --pixel-highlight: #fff;
+  --pixel-ghost: #bbb;
+}
+* {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+input,
+textarea,
+[contenteditable="true"] {
+  user-select: auto !important;
+  -webkit-user-select: auto !important;
+}
+
+.c-label {
+  position: absolute;
+  font-size: 15px;
+  color: #888;
+  user-select: none;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  z-index: 7;
+  padding: 20px;
+  background: var(--pixel-background);
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+td {
+  background-color: #ffffff;
+}

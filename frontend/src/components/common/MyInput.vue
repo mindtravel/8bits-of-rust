@@ -7,14 +7,15 @@
         @change="handleChange"
         class="pixel-style"
         >
-
         </el-input>
     </div>
 </template>
 
+<script>
+export default { name: 'MyInput' }
+</script>
 <script setup>
   import { ref, defineProps, defineEmits } from 'vue'
-  
   const props = defineProps({
     modelValue: String,
     placeholder: {
@@ -39,26 +40,17 @@
 
 <style lang="scss" scoped>
 .pixel-input {
-  --pixel-color: #333;
-  --bg-color: #f0f0f0;
+  --pixel-color: var(--pixel-text);
+  --bg-color: var(--pixel-primary);
 
   :deep(.el-input__wrapper) {
     background: var(--bg-color);
-    // border: 2px solid var(--pixel-color);
-    // border-radius: 0;
-    // box-shadow: 3px 3px 0 var(--pixel-color);
+    border: 2px solid var(--pixel-border);
+    border-radius: 0;
+    max-width: 200px;
     padding: 4px 8px;
     font-family: 'Zpix', monospace;
-    font-size: 14px;
-    
-    &:hover {
-      // box-shadow: 4px 4px 0 var(--pixel-color);
-    }
-    
-    &.is-focus {
-      // box-shadow: 2px 2px 0 var(--pixel-color);
-      border-color: #ff6b6b;
-    }
+    font-size: 14px; 
   }
 }
 </style>

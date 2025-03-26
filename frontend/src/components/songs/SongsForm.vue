@@ -6,7 +6,6 @@
 
 <script>
 import SongsList from './SongsList.vue';
-import MyInput from '@/components/utils/MyInput.vue';
 export default {
   name: "SongsForm",
   data() {
@@ -21,7 +20,6 @@ export default {
   },
   components: {
     SongsList,
-    MyInput,
   },
   methods: {
     addItem() {

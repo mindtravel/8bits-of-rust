@@ -9,10 +9,9 @@
   </div>
 </template>
 <script>
-import MyText from '@/components/utils/MyText.vue';
+
 export default {
   components: {
-    'my-text': MyText,
   }
 }
 </script>

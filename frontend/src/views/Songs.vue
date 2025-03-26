@@ -1,25 +1,27 @@
 <template>
-    <div>
+<div class="a">
     <my-button 
-      type="primary" 
-      @click="addItem" 
-      text="新增歌曲"
-      class="add-btn"
-      size = "medium"
-    />    
-    <songs-form v-model="name" ref="songsFormRef"/>
+        type="primary" 
+        @click="addItem" 
+        text="新增歌曲"
+        class="add-btn"
+        size = "medium" />
+    <songs-form v-model="newSongName" ref="songsFormRef" />
     <!-- <songs-list ref="songsListRef"/> -->
-    </div>
+</div>
 </template>
 <script>
-import MyButton from "@/components/utils/MyButton.vue";
+
 // import SongsList from "@/components/songs/SongsList.vue";
+import { ref } from 'vue';
 import SongsForm from '@/components/songs/SongsForm.vue';
 export default {
     name: "Songs",
     components: { 
-        MyButton,
         SongsForm,
+    },
+    setup() {
+        const newSongName = ref('');
     },
     mounted() {
         this.$nextTick(() => {
@@ -34,4 +36,7 @@ export default {
 };
 </script>
 <style>
+.a {
+    display: inline-block;
+}
 </style>

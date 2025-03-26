@@ -1,32 +1,75 @@
 <template>
-<my-text v-bind:content="'歌曲名字为：'+songName" size = "large"/><br>
-<my-text v-bind:content="'导出格式为：'+format" size = "large"/><br>
-<my-text v-bind:content="'预计占用空间为为：'+estimated_space+'MB'" size = "large"/>
-<div class="placeholder-block"></div>
-<my-button size="large" text="导出"/>
+<div >
+    <div class="export-params">
+        <div class="selector">
+        <my-text content="导出格式：" size="large"/>
+        <my-select
+            v-model="exportFormat"
+            :options="[
+            { label: '.mp3', value: 'mp3' },
+            { label: '.wav', value: 'wav' }
+            ]"
+        />
+        </div>
+        <div class="selector">
+        <my-text content="导出位宽：" size="large"/>
+        <my-select
+            v-model="exportBitWidth"
+            :options="[
+            { label: '8bit', value: '8bit' },
+            { label: '16bit', value: '16bit' },
+            { label: '24bit', value: '24bit' },
+            ]"
+        />
+        </div>
+        <div class="selector">
+            <my-text content="歌曲名字：" size="large"/>
+            <my-input v-model="songName" size="large"/>
+        </div>
+        <my-text v-bind:content="'预计占用空间：'+estimated_space+'MB'" size = "large"/>
+    </div>
+    <div>
+        <my-button size="large" text="导出"/>    
+    </div>
+</div>
+
+
 </template>
 <script>
-import MyText from "@/components/utils/MyText.vue";
-import MyButton from "@/components/utils/MyButton.vue";
+import { mapState, mapMutations } from 'vuex';
 export default {
-    name: 'PianoRoll',
-    components: {
-        'my-text': MyText,
-        'my-button': MyButton,
+    computed: {
+        ...mapState(['estimated_space','songName']),
+    songName: {
+      get() {
+        return this.$store.state.songName
+      },
+      set(value) {
+        this.$store.commit('setSongName', value)
+      }
     },
-    data() {
-        return {
-            format: 'default',
-            songName: 'default',
-            estimated_space: 0,
+        exportFormat: {
+            get() {
+                return this.$store.state.exportFormat
+            },
+            set(value) {
+                this.$store.commit('setExportFormat', value)
+            }
         }
     },
 }
-
-</script>
-<style>
+</script><style>
+.export-params {
+  display: inline-block;
+  gap: 20px;
+  margin-bottom: 15px;
+  padding: 10px;
+}
 .placeholder-block {
-  width: 300px;       /* 指定宽度 */
+  width: 200px;       /* 指定宽度 */
   height: 100px;      /* 指定高度 */
+}
+.selector {
+    display: flex;
 }
 </style>

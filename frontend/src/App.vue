@@ -9,15 +9,15 @@
     </router-link>
     <div v-show="!StartRoute">
       <router-link to="/compose">
-        <my-button text="创作"/>
+        <my-button text="创作" :active="$route.path === '/compose'"/>
       </router-link>
       |
       <router-link to="/songs">
-        <my-button text="歌曲"/>  
+        <my-button text="歌曲" :active="$route.path === '/songs'"/>  
       </router-link>
       |
       <router-link to="/developers">
-        <my-button text="开发者"/>
+        <my-button text="开发者" :active="$route.path === '/developers'"/>
       </router-link>
       <br>
       <br>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import MyButton from '@/components/utils/MyButton.vue'
+
 import Compose from '@/views/Compose.vue'; 
 import Songs from '@/views/Songs.vue';
 import Developers from '@/views/Developers.vue';
@@ -36,7 +36,6 @@ console.log("begin")
 export default {
   name: 'App',
   components: {
-    'my-button': MyButton,
     Compose,
     Songs,
     Developers
@@ -45,6 +44,26 @@ export default {
     StartRoute() {
       console.log(this.$route.path === '/')
       return this.$route.path === '/'
+    }
+  },
+  mounted() {
+    this.$el.addEventListener('selectstart', this.handleSelectStart);
+    this.$el.addEventListener('contextmenu', this.handleContextMenu);
+  },
+  beforeDestroy() {
+    this.$el.removeEventListener('selectstart', this.handleSelectStart);
+    this.$el.removeEventListener('contextmenu', this.handleContextMenu);
+  },
+  methods: {
+    handleSelectStart(e) {
+      if (!e.target.matches('input, textarea, [contenteditable="true"]')) {
+        e.preventDefault();
+      }
+    },
+    handleContextMenu(e) {
+      if (!e.target.matches('input, textarea, [contenteditable="true"]')) {
+        e.preventDefault();
+      }
     }
   }
 }
@@ -58,7 +77,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('./assets/image.png') rgb(255, 149, 19) repeat;
+  background: url('./assets/image.png') rgb(255, 157, 36) repeat;
   background-blend-mode: multiply;
   opacity: 0.3; 
   z-index: -1;
@@ -66,6 +85,6 @@ export default {
 
 .content {
   position: relative;
-  z-index: 2; /* 确保内容在背景层上方 */
+  z-index: 0; /* 确保内容在背景层上方 */
 }
 </style>
