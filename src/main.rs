@@ -64,7 +64,7 @@ use util::parameter::baseconst::MAX_POLY;
 fn main() {
     let mut song = init_test_song();
     // song.save_to_file("my_song.song");
-    song.read_from_file("my_song.song").unwrap();
+    song.read_from_file("example/my_song.song").unwrap();
     let name = "my_wave";
     let sample = mixer(&song);
     // let sample = mixer(&SONG);
