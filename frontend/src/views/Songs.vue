@@ -14,9 +14,8 @@
 
 // import SongsList from "@/components/songs/SongsList.vue";
 import { ref } from 'vue';
-import SongsForm from '@/components/songs/SongsForm.vue';
+import SongsForm from '@/components/Songs/SongsForm.vue';
 export default {
-    name: "Songs",
     components: { 
         SongsForm,
     },

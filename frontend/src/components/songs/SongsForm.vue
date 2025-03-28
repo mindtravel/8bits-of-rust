@@ -7,7 +7,6 @@
 <script>
 import SongsList from './SongsList.vue'
 export default {
-  name: 'SongsForm',
   data() {
     return {
       songName: '',

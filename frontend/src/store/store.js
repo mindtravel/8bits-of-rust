@@ -17,7 +17,7 @@ export default createStore({
     estimated_space: 0,
     scrollX: 0,
     scrollY: 0,
-    tracks: [
+    channels: [
       { id: 1, name: '音轨 1', patterns: [] },
       { id: 2, name: '音轨 2', patterns: [] },
       { id: 3, name: '音轨 3', patterns: [] },
@@ -33,24 +33,24 @@ export default createStore({
       state.scrollX = x;
       state.scrollY = y;
     },
-    addPatternToTrack(state, { trackId, pattern }) {
-      const track = state.tracks.find(t => t.id === trackId);
-      if (track) {
-        track.patterns.push(pattern);
+    addPatternToChannel(state, { channelId, pattern }) {
+      const channel = state.channels.find(t => t.id === channelId);
+      if (channel) {
+        channel.patterns.push(pattern);
       }
     },
-    updateTrackPattern(state, { trackId, patternId, pattern }) {
-      const track = state.tracks.find(t => t.id === trackId);
-      if (track) {
-        const index = track.patterns.findIndex(p => p.id === patternId);
-        track.patterns.splice(index, 1, pattern);
+    updateChannelPattern(state, { channelId, patternId, pattern }) {
+      const channel = state.channels.find(t => t.id === channelId);
+      if (channel) {
+        const index = channel.patterns.findIndex(p => p.id === patternId);
+        channel.patterns.splice(index, 1, pattern);
       }
     },
-    deleteTrackPattern(state, { trackId, patternId }) {
-      const track = state.tracks.find(t => t.id === trackId);
-      if (track) {
-        const index = track.patterns.findIndex(p => p.id === patternId);
-        track.patterns.splice(index, 1);
+    deleteChannelPattern(state, { channelId, patternId }) {
+      const channel = state.channels.find(t => t.id === channelId);
+      if (channel) {
+        const index = channel.patterns.findIndex(p => p.id === patternId);
+        channel.patterns.splice(index, 1);
       }
     },
     initNotes(state) {

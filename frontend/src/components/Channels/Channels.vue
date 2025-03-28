@@ -13,7 +13,7 @@
     </div>
     <!-- <my-left-bar class="left-bar" :component-name="leftBarStyle" /> -->
     <div class="left-bar">
-      <Tracks :Range="5" />
+      <ChannelNames :Range="5" />
     </div>
     <div class="content-area">
       <PatternManager />
@@ -25,18 +25,18 @@
 <script>
 // import Score from './Score.vue'
 import PatternManager from './PatternManager.vue'
-import Tracks from './Tracks.vue'
+import ChannelNames from './ChannelNames.vue'
 export default {
-  name: 'TrackSection',
+  name: 'Channels',
   components: {
     // Score,
-    Tracks,
+    ChannelNames,
     PatternManager,
   },
   props: {
     leftBarStyle: {
       type: String,
-      default: 'TrackHeader',
+      default: 'ChannelHeader',
     },
   },
   data() {

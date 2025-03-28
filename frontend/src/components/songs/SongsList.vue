@@ -24,9 +24,7 @@
 </template>
 
 <script>
-export default {
-  name: 'SongsList', // 显式定义组件名称[7](@ref)
-}
+export default {}
 </script>
 
 <script setup>

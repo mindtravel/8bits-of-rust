@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="main-container">
-      <track-sections ref="trackSection" />
+      <channels ref="channelSection" />
     </div>
     <br />
     <div class="main-container">
@@ -11,13 +11,12 @@
 </template>
 <script>
 import PianoRoll from '../PianoRoll/PianoRoll.vue'
-import TrackSections from '../TrackSections/TrackSections.vue'
+import Channels from '../Channels/Channels.vue'
 
 export default {
-  name: 'Arrangement',
   components: {
     'piano-roll': PianoRoll,
-    'track-sections': TrackSections,
+    'channels': Channels,
   },
   // computed: {
   //     viewportWidth() {
@@ -44,10 +43,10 @@ export default {
     // startResize(e) {
     //     this.isDragging = true;
     //     this.initialX = e.clientX;
-    //     this.initialWidth = this.$refs.trackSection.offsetWidth;
+    //     this.initialWidth = this.$refs.channelSection.offsetWidth;
     // },
     // syncScroll() {
-    //     this.$refs.pianoSection.scrollLeft = this.$refs.trackSection.scrollLeft;
+    //     this.$refs.pianoSection.scrollLeft = this.$refs.channelSection.scrollLeft;
     // }
   },
 }

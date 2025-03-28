@@ -15,7 +15,6 @@
 
 <script>
 export default {
-  name: 'PianoKeys',
   props: {
     pitchRange: {
       type: Number,

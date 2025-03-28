@@ -32,7 +32,6 @@
 </template>
 <script>
 export default {
-  name: 'Mixer',
   components: {},
   data() {
     return {

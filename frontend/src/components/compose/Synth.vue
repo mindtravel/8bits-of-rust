@@ -18,7 +18,6 @@ import MyText from '@/components/utils/MyText.vue'
 import MyButton from '@/components/utils/MyButton.vue'
 import MyKnob from '@/components/utils/MyKnob.vue'
 export default {
-  name: 'Synth',
   components: {
     'my-text': MyText,
     'my-button': MyButton,

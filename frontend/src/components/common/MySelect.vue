@@ -19,7 +19,6 @@
 
 <script>
 export default {
-  name: 'MySelect',
   props: {
     options: {
       type: Array,

@@ -23,7 +23,6 @@ import Arrangement from '@/components/compose/Arrangement.vue';
 import ExportSong from '@/components/compose/ExportSong.vue';
 
 export default {
-  name: 'Compose',
   components: {
     'plugin': Plugin,
     'mixer': Mixer,

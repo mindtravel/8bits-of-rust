@@ -1,4 +1,3 @@
-import MyRoll from './MyRoll.vue'
 import MyButton from './MyButton.vue';
 import MyInput from './MyInput.vue';
 import MyText from './MyText.vue';
@@ -6,7 +5,6 @@ import MyKnob from './MyKnob.vue';
 import MySlider from './MySlider.vue';
 import MySelect from './MySelect.vue';
 import MyGrid from './MyGrid.vue';
-import MyLeftBar from './MyLeftBar.vue';
 import MyTest from './MyTest.vue';
 
 const components = {
@@ -16,9 +14,7 @@ const components = {
   MyKnob,
   MySelect,
   MySlider,
-  MyRoll,
   MyGrid,
-  MyLeftBar,
   MyTest,
 };
 

@@ -2,7 +2,7 @@
   <div class="key-column">
     <div v-for="i in this.Range" class="key" :style="{ top: (i - 1) * 50 + 'px' }">
       <my-text
-        :content="'track' + i"
+        :content="'channel' + i"
         :style="{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px' }"
       />
     </div>

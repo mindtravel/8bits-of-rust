@@ -34,7 +34,6 @@ import Developers from '@/views/Developers.vue'
 
 console.log('begin')
 export default {
-  name: 'App',
   components: {
     Compose,
     Songs,

@@ -26,7 +26,6 @@
 import PianoKeys from './PianoKeys.vue'
 import Score from './Score.vue'
 export default {
-  name: 'MyRoll',
   components: {
     PianoKeys,
     Score,

@@ -42,15 +42,12 @@ const props = defineProps({
   },
 })
 
-// 2. Emits 声明
 const emit = defineEmits(['update:modelValue'])
 
-// 3. 计算属性优化样式
 const sliderStyle = computed(() => ({
   width: props.orientation === 'horizontal' ? '200px' : '30px',
 }))
 
-// 4. 事件处理
 const emitValue = (event) => {
   emit('update:modelValue', Number(event.target.value))
 }
