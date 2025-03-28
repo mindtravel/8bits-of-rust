@@ -21,7 +21,6 @@ import Plugin from '@/components/compose/Plugin.vue';
 import Mixer from '@/components/compose/Mixer.vue';
 import Arrangement from '@/components/compose/Arrangement.vue';
 import ExportSong from '@/components/compose/ExportSong.vue';
-import PianoRoll from '@/components/Window/PianoRoll.vue';
 
 export default {
   name: 'Compose',
@@ -30,7 +29,6 @@ export default {
     'mixer': Mixer,
     'arrangement': Arrangement,
     'export-song': ExportSong,
-    PianoRoll
   },
   methods: {
     isComposePage(state) {

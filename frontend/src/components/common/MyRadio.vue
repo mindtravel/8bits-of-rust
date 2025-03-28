@@ -1,13 +1,9 @@
 <template>
-  <div 
-    class="pixel-radio"
-    :class="{ 'disabled': disabled, 'checked': isChecked }"
-    @click="toggleRadio"
-  >
+  <div class="pixel-radio" :class="{ disabled: disabled, checked: isChecked }" @click="toggleRadio">
     <div class="radio-box">
       <div class="radio-inner"></div>
     </div>
-    <my-text :content="label" size="medium"/>
+    <my-text :content="label" size="medium" />
   </div>
 </template>
 
@@ -16,38 +12,38 @@ export default {
   name: 'MyRadio',
   model: {
     prop: 'value',
-    event: 'input'
+    event: 'input',
   },
   props: {
     value: {
       type: [String, Number],
-      default: ''
+      default: '',
     },
     label: {
       type: String,
-      required: true
+      required: true,
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     checkedValue: {
       type: [String, Number],
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     isChecked() {
       return this.value === this.checkedValue
-    }
+    },
   },
   methods: {
     toggleRadio() {
       if (!this.disabled) {
         this.$emit('input', this.checkedValue)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -63,12 +59,13 @@ export default {
   background: var(--pixel-background);
   border: 3px solid;
   border-image: repeating-linear-gradient(
-    135deg,
-    var(--pixel-primary) 0,
-    var(--pixel-primary) 2px,
-    transparent 2px,
-    transparent 4px
-  ) 3;
+      135deg,
+      var(--pixel-primary) 0,
+      var(--pixel-primary) 2px,
+      transparent 2px,
+      transparent 4px
+    )
+    3;
 }
 
 .radio-box {
@@ -77,13 +74,7 @@ export default {
   border: 3px solid var(--pixel-primary);
   margin-right: 12px;
   position: relative;
-  clip-path: polygon(
-    0 0,
-    100% 0,
-    100% calc(100% - 4px),
-    calc(100% - 4px) 100%,
-    0 100%
-  );
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%);
 }
 
 .radio-inner {
@@ -109,11 +100,12 @@ export default {
 
 .disabled .radio-box {
   border-image: repeating-linear-gradient(
-    135deg,
-    #666 0,
-    #666 2px,
-    transparent 2px,
-    transparent 4px
-  ) 2;
+      135deg,
+      #666 0,
+      #666 2px,
+      transparent 2px,
+      transparent 4px
+    )
+    2;
 }
 </style>

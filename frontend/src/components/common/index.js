@@ -7,6 +7,7 @@ import MySlider from './MySlider.vue';
 import MySelect from './MySelect.vue';
 import MyGrid from './MyGrid.vue';
 import MyLeftBar from './MyLeftBar.vue';
+import MyTest from './MyTest.vue';
 
 const components = {
   MyButton,
@@ -18,6 +19,7 @@ const components = {
   MyRoll,
   MyGrid,
   MyLeftBar,
+  MyTest,
 };
 
 export default {

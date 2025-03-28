@@ -5,7 +5,7 @@
       <div class="dropdown-arrow">▼</div>
     </div>
     <div v-show="isOpen" class="dropdown-options">
-      <div 
+      <div
         v-for="(option, index) in options"
         :key="index"
         class="option"
@@ -24,38 +24,38 @@ export default {
     options: {
       type: Array,
       required: true,
-      validator: value => value.every(opt => 'value' in opt && 'label' in opt)
+      validator: (value) => value.every((opt) => 'value' in opt && 'label' in opt),
     },
     value: {
       type: [String, Number],
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
       isOpen: false,
-      selectedLabel: ''
+      selectedLabel: '',
     }
   },
   watch: {
     value: {
       immediate: true,
       handler(newVal) {
-        const selected = this.options.find(opt => opt.value === newVal);
-        this.selectedLabel = selected ? selected.label : '';
-      }
-    }
+        const selected = this.options.find((opt) => opt.value === newVal)
+        this.selectedLabel = selected ? selected.label : ''
+      },
+    },
   },
   methods: {
     toggleDropdown() {
-      this.isOpen = !this.isOpen;
+      this.isOpen = !this.isOpen
     },
     selectOption(option) {
-      this.$emit('input', option.value);
-      this.selectedLabel = option.label;
-      this.isOpen = false;
-    }
-  }
+      this.$emit('input', option.value)
+      this.selectedLabel = option.label
+      this.isOpen = false
+    },
+  },
 }
 </script>
 

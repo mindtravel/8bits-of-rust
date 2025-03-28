@@ -15,7 +15,7 @@
 </template>
 
 <script>
-export default {name: 'my-slider'};
+export default { name: 'my-slider' }
 </script>
 
 <script setup>
@@ -25,21 +25,21 @@ import { computed } from 'vue'
 const props = defineProps({
   modelValue: {
     type: Number,
-    required: true
+    required: true,
   },
   min: {
     type: Number,
-    default: 0
+    default: 0,
   },
   max: {
     type: Number,
-    default: 100
+    default: 100,
   },
   orientation: {
     type: String,
     default: 'horizontal',
-    validator: (value) => ['horizontal', 'vertical'].includes(value)
-  }
+    validator: (value) => ['horizontal', 'vertical'].includes(value),
+  },
 })
 
 // 2. Emits 声明
@@ -47,7 +47,7 @@ const emit = defineEmits(['update:modelValue'])
 
 // 3. 计算属性优化样式
 const sliderStyle = computed(() => ({
-  width: props.orientation === 'horizontal' ? '200px' : '30px'
+  width: props.orientation === 'horizontal' ? '200px' : '30px',
 }))
 
 // 4. 事件处理
@@ -93,8 +93,8 @@ const handleDoubleClick = () => {
 }
 
 .slider-container.vertical {
-    transform: rotate(270deg);
-    transform-origin: left bottom;
-    margin: 0 40px 20px 20px;
-  }  
+  transform: rotate(270deg);
+  transform-origin: left bottom;
+  margin: 0 40px 20px 20px;
+}
 </style>

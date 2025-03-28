@@ -1,12 +1,12 @@
 <template>
-  <div 
+  <div
     class="flex-container"
     :style="{
       display: layoutType,
       flexDirection: direction,
       alignItems: align,
       justifyContent: justify,
-      gap: gap + 'px'
+      gap: gap + 'px',
     }"
   >
     <slot></slot>
@@ -20,25 +20,25 @@ export default {
     layoutType: {
       type: String,
       default: 'flex',
-      validator: (value) => ['flex', 'grid'].includes(value)
+      validator: (value) => ['flex', 'grid'].includes(value),
     },
     direction: {
       type: String,
-      default: 'row'
+      default: 'row',
     },
     align: {
       type: String,
-      default: 'stretch'
+      default: 'stretch',
     },
     justify: {
       type: String,
-      default: 'flex-start'
+      default: 'flex-start',
     },
     gap: {
       type: Number,
-      default: 8
-    }
-  }
+      default: 8,
+    },
+  },
 }
 </script>
 

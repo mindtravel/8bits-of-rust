@@ -10,15 +10,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(song, index) in storeSongs" :key="index">
+        <tr v-for="(song, index) in storeSongs">
           <td><my-text :content="(index + 1).toString()" /></td>
           <td><my-text :content="song.name" /></td>
           <td><my-text :content="song.date" /></td>
           <td>
-            <my-button 
-              text="删除" 
-              @click="deleteItem(index)" 
-            />
+            <my-button text="删除" @click="deleteItem(index)" />
           </td>
         </tr>
       </tbody>
@@ -28,7 +25,7 @@
 
 <script>
 export default {
-  name: "SongsList" // 显式定义组件名称[7](@ref)
+  name: 'SongsList', // 显式定义组件名称[7](@ref)
 }
 </script>
 
@@ -40,8 +37,8 @@ import { useStore } from 'vuex'
 const props = defineProps({
   max_song_num: {
     type: Number,
-    default: 10
-  }
+    default: 10,
+  },
 })
 
 const store = useStore()
@@ -55,9 +52,9 @@ const getCurrentTime = () => {
 
 // 添加歌曲方法
 const addItem = (name) => {
-  store.commit('addSong', { 
-    name: name, 
-    date: getCurrentTime() 
+  store.commit('addSong', {
+    name: name,
+    date: getCurrentTime(),
   })
 }
 

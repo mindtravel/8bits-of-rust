@@ -1,7 +1,7 @@
 <template>
-    <div class="left-bar">
-        <slot></slot>
-    </div>
+  <div class="left-bar">
+    <slot></slot>
+  </div>
 </template>
 
 <script>
@@ -10,8 +10,8 @@ export default {
   props: {
     componentName: {
       type: String,
-      default: 'div'
-    }
+      default: 'div',
+    },
   },
   render(createElement, { props, children }) {
     return createElement(
@@ -20,8 +20,8 @@ export default {
         class: 'left-bar',
       },
       children
-    );
-  }
+    )
+  },
 }
 </script>
 <style scoped>

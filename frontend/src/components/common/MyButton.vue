@@ -1,7 +1,7 @@
 <template>
-  <button 
+  <button
     class="my-button"
-    :class="[sizeClass, { 'disabled': disabled, 'active': active }]"
+    :class="[sizeClass, { disabled: disabled, active: active }]"
     :disabled="disabled"
     :aria-label="ariaLabel || text"
     @click="$emit('click', $event)"
@@ -19,53 +19,50 @@
 <script>
 export default {
   name: 'MyButton',
-  components: {
-  },
+  components: {},
   props: {
     active: {
       type: Boolean,
-      default: false
+      default: false,
     },
     text: {
       type: String,
-      default: 'Button'
+      default: 'Button',
     },
     variant: {
       type: String,
       default: 'primary',
-      validator: (v) => ['primary', 'secondary', 'ghost'].includes(v)
+      validator: (v) => ['primary', 'secondary', 'ghost'].includes(v),
     },
     size: {
       type: String,
       default: 'medium',
-      validator: (v) => ['small', 'medium', 'large'].includes(v)
+      validator: (v) => ['small', 'medium', 'large'].includes(v),
     },
     disabled: Boolean,
-    ariaLabel: String
+    ariaLabel: String,
   },
   emits: ['click'],
   computed: {
     sizeClass() {
       return `size-${this.size}`
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style scoped>
 .my-button {
   --primary-color: rgb(255, 255, 255);
-  --secondary-color: rgb(240,240,240);
+  --secondary-color: rgb(240, 240, 240);
   --ghost-color: var(--pixel-ghost);
-  
+
   position: relative;
   border: none;
   /* border-radius: 4px; */
   cursor: pointer;
   background-color: var(--pixel-primary);
-  transition: 
-    background-color 0.2s ease,
-    transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: background-color 0.2s ease, transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -73,9 +70,18 @@ export default {
 }
 
 /* ????? */
-.size-small { padding: 8px 16px; font-size: 14px; }
-.size-medium { padding: 12px 24px; font-size: 16px; }
-.size-large { padding: 16px 32px; font-size: 18px; }
+.size-small {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+.size-medium {
+  padding: 12px 24px;
+  font-size: 16px;
+}
+.size-large {
+  padding: 16px 32px;
+  font-size: 18px;
+}
 
 /* ??????? */
 .my-button.active:not(.disabled) {

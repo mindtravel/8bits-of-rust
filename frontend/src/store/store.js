@@ -1,14 +1,16 @@
 // store.js
 // import { set } from 'core-js/core/dict';
+// import { no } from 'element-plus/es/locale';
 import { createStore } from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 
 export default createStore({
   state: {
     notes: [],
+    patterns: [],
+    songs: [],
     selectedNotes: new Set(),
     separatorPosition: 300,
-    songs: [],
     activeComposePage: "plugin",
     exportFormat: '',
     songName: '',
@@ -51,8 +53,21 @@ export default createStore({
         track.patterns.splice(index, 1);
       }
     },
+    initNotes(state) {
+      // console.log(typeof state.notes)
+      // for (var i = 0; i < 88; ++i) {
+      //   for (var j = 0; j < 16*8; ++j) {
+      //     state.notes.grid[i][j] = 0;
+      //   }
+      // }
+    // console.log("init notes", state.notes[11][21])
+    },
     addNote(state, note) {
-      state.notes.push(note);
+      state.notes.push(note)
+      console.log("add notes")
+      // for note in state.notes {
+      //   console.log(note)
+      // }
     },
     deleteNote(state, id) {
       state.notes = state.notes.filter(n => n.id !== id);
@@ -61,6 +76,24 @@ export default createStore({
       const note = state.notes.find(n => n.id === id);
       if (note) note.length = length;
     },
+
+    addPattern(state, pattern) {
+      state.patterns.push(pattern)
+      console.log("add patterns")
+      // for pattern in state.patterns {
+      //   console.log(pattern)
+      // }
+    },
+    deletePattern(state, id) {
+      state.patterns = state.patterns.filter(n => n.id !== id);
+    },
+    updatePatternLength(state, { id, length }) {
+      const pattern = state.patterns.find(n => n.id === id);
+      if (pattern) pattern.length = length;
+    },
+
+
+
     updateSelection(state, { id, selected }) {
       selected ? state.selectedNotes.add(id) : state.selectedNotes.delete(id);
     },
@@ -70,6 +103,7 @@ export default createStore({
     setExportFormat(state, format) {
       state.exportFormat = format;
     },
+
     addSong(state, song) {
       state.songs.push(song);
     },

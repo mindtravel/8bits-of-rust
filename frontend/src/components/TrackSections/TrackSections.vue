@@ -13,21 +13,25 @@
     </div>
     <!-- <my-left-bar class="left-bar" :component-name="leftBarStyle" /> -->
     <div class="left-bar">
-      <PianoKeys />
+      <Tracks :Range="5" />
     </div>
     <div class="content-area">
-      <my-grid :n_rows="88" :h_rows="20" />
+      <PatternManager />
     </div>
     <!-- </my-left-bar> -->
   </div>
 </template>
 
 <script>
-import PianoKeys from '@/components/PianoRoll/PianoKeys.vue'
+// import Score from './Score.vue'
+import PatternManager from './PatternManager.vue'
+import Tracks from './Tracks.vue'
 export default {
-  name: 'MyRoll',
+  name: 'TrackSection',
   components: {
-    PianoKeys,
+    // Score,
+    Tracks,
+    PatternManager,
   },
   props: {
     leftBarStyle: {

@@ -16,18 +16,20 @@
       <PianoKeys />
     </div>
     <div class="content-area">
-      <my-grid :n_rows="88" :h_rows="20" />
+      <score />
     </div>
     <!-- </my-left-bar> -->
   </div>
 </template>
 
 <script>
-import PianoKeys from '@/components/PianoRoll/PianoKeys.vue'
+import PianoKeys from './PianoKeys.vue'
+import Score from './Score.vue'
 export default {
   name: 'MyRoll',
   components: {
     PianoKeys,
+    Score,
   },
   props: {
     leftBarStyle: {
@@ -46,7 +48,7 @@ export default {
 <style scoped>
 .roll {
   position: relative;
-  height: 400px;
+  height: 600px;
   width: 100%;
   background: #ccc;
   overflow-x: scroll;
